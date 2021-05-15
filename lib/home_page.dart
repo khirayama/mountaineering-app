@@ -8,7 +8,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _currentIndex = 0;
+  List<int> _queue = <int>[0];
 
   static List<StatefulWidget> _widgetOptions = <StatefulWidget>[
     HomeContent(),
@@ -16,24 +16,38 @@ class _HomePageState extends State<HomePage> {
     ProfileContent(),
   ];
 
-  void _onItemTapped(int index) => setState(() => _currentIndex = index );
+  void _onItemTapped(int index) => setState(() {
+    _queue.add(index);
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: _widgetOptions.elementAt(_currentIndex)),
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), title: Text('Home')),
-          BottomNavigationBarItem(icon: Icon(Icons.map_outlined), title: Text('Map')),
-          BottomNavigationBarItem(icon: Icon(Icons.account_circle_outlined), title: Text('Profile')),
-        ],
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        currentIndex: _currentIndex,
-        fixedColor: Colors.blueAccent,
-        onTap: _onItemTapped,
-        type: BottomNavigationBarType.fixed,
+    int _currentIndex =_queue.elementAt(_queue.length - 1);
+    return WillPopScope(
+      onWillPop: () async {
+        if (_queue.length > 1) {
+          setState(() {
+            _queue.removeAt(_queue.length - 1);
+          });
+          return false;
+        }
+        return true;
+      },
+      child: Scaffold(
+        body: Center(child: _widgetOptions.elementAt(_currentIndex)),
+        bottomNavigationBar: BottomNavigationBar(
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(icon: Icon(Icons.home_outlined), title: Text('Home')),
+            BottomNavigationBarItem(icon: Icon(Icons.map_outlined), title: Text('Map')),
+            BottomNavigationBarItem(icon: Icon(Icons.account_circle_outlined), title: Text('Profile')),
+          ],
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          currentIndex: _currentIndex,
+          fixedColor: Colors.blueAccent,
+          onTap: _onItemTapped,
+          type: BottomNavigationBarType.fixed,
+        ),
       ),
     );
   }
