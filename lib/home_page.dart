@@ -12,11 +12,15 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _counter = 0;
 
+  int _currentIndex = 0;
+
   void _incrementCounter() {
     setState(() {
       _counter++;
     });
   }
+
+  void _onItemTapped(int index) => setState(() => _currentIndex = index );
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +46,19 @@ class _HomePageState extends State<HomePage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: Icon(Icons.add),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), title: Text('Home')),
+          BottomNavigationBarItem(icon: Icon(Icons.map_outlined), title: Text('Map')),
+          BottomNavigationBarItem(icon: Icon(Icons.account_circle_outlined), title: Text('Profile')),
+        ],
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        currentIndex: _currentIndex,
+        fixedColor: Colors.blueAccent,
+        onTap: _onItemTapped,
+        type: BottomNavigationBarType.fixed,
       ),
     );
   }
