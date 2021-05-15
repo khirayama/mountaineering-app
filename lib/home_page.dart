@@ -73,6 +73,18 @@ class _HomeContentState extends State<HomeContent> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text('You have pushed the button this many times:'),
+            OutlinedButton(
+                child: const Text('Push'),
+                onPressed: () {
+                  Navigator.of(context).push<void>(
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) {
+                        return SamplePage();
+                      },
+                    ),
+                  );
+                },
+              ),
           ],
         ),
       ),
@@ -127,6 +139,33 @@ class _ProfileContentState extends State<ProfileContent> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text('You have pushed the button this many times:'),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SamplePage extends StatefulWidget {
+  SamplePage({Key key}) : super(key: key);
+
+  @override
+  _SamplePageState createState() => _SamplePageState();
+}
+
+class _SamplePageState extends State<SamplePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("SamplePage"),
+        elevation: 0,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text('Sample Page'),
           ],
         ),
       ),
