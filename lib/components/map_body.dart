@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 
+import '../secret.dart';
+
 class MapBody extends StatefulWidget {
   MapBody({Key key, this.index}) : super(key: key);
 
@@ -23,7 +25,7 @@ class _MapBodyState extends State<MapBody> {
       children: [
         Center(
           child: MapboxMap(
-            accessToken: String.fromEnvironment("MAPBOX_ACCESS_TOKEN"),
+            accessToken: MAPBOX_ACCESS_TOKEN,
             initialCameraPosition: CameraPosition(
               zoom: _zoom,
               target: _target,
