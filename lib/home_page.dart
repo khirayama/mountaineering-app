@@ -31,6 +31,12 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text('Home'),
+            OutlinedButton(
+                child: const Text('Push'),
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/post');
+                },
+              ),
           ],
         ),
       ),
