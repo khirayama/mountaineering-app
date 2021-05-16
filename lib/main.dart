@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import './home_page.dart';
-import './map_page.dart';
-import './profile_page.dart';
-import './post_page.dart';
+import './pages/home.dart';
+import './pages/map.dart';
+import './pages/profile.dart';
+import './pages/post.dart';
 
 void main() {
   runApp(

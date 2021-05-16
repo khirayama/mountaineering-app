@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import './components/navigation.dart';
+import '../components/navigation.dart';
 
 class MapPage extends StatefulWidget {
   MapPage({Key key}) : super(key: key);

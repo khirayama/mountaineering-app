@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import './components/navigation.dart';
+import '../components/navigation.dart';
 
 class ProfilePage extends StatefulWidget {
   ProfilePage({Key key}) : super(key: key);
