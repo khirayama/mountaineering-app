@@ -21,13 +21,6 @@ class _HomePageState extends State<HomePage> {
         pageBuilder: (context, animation, secondaryAnimation) => ProfilePage(),
       ));
     }
-    // Navigator.of(context).push(PageRouteBuilder(
-    //   pageBuilder: (context, animation, secondaryAnimation) => MapPage(),
-    // ));
-    // Navigator.of(context).pushReplacementNamed('/map');
-    // Navigator.of(context).push(PageRouteBuilder(
-    //   pageBuilder: (),
-    // ));
   });
 
   @override
