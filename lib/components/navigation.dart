@@ -22,7 +22,7 @@ class _NavigationState extends State<Navigation> {
     switch (index) {
       case 0:
         Navigator.of(context).push(PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) => HomePage(),
+          pageBuilder: (context, animation, secondaryAnimation) => HomePage(index: 0),
         ));
         break;
       case 1:

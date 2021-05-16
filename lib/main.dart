@@ -10,9 +10,9 @@ void main() {
     MaterialApp(
       initialRoute: '/',
       routes: <String, WidgetBuilder> {
-        '/': (BuildContext context) => HomePage(),
-        '/map': (BuildContext context) => MapPage(),
-        '/profile': (BuildContext context) => ProfilePage(),
+        '/': (BuildContext context) => HomePage(index: 0),
+        '/map': (BuildContext context) => HomePage(index: 1),
+        '/profile': (BuildContext context) => HomePage(index: 2),
         '/post': (BuildContext context) => PostPage(),
       },
       title: 'Flutter Demo',
