@@ -31,6 +31,16 @@ class _HomePageState extends State<HomePage> {
     });
   });
 
+  Future<bool> _onWillPop() async {
+    if (_tabStack.length > 1) {
+      setState(() {
+        _tabStack.removeLast();
+      });
+      return false;
+    }
+    return true;
+  }
+
   @override
   void initState() {
     setState(() {
@@ -43,21 +53,24 @@ class _HomePageState extends State<HomePage> {
     int index = _tabStack[_tabStack.length - 1];
 
     return SafeArea(
-      child: Scaffold(
-        body: _tabs.elementAt(index),
-        bottomNavigationBar: BottomNavigationBar(
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Home'),
-            BottomNavigationBarItem(icon: Icon(Icons.map_outlined), label: 'Map'),
-            BottomNavigationBarItem(icon: Icon(Icons.account_circle_outlined), label: 'Profile'),
-          ],
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          currentIndex: index,
-          fixedColor: Colors.blueAccent,
-          onTap: _onItemTapped,
-          type: BottomNavigationBarType.fixed,
+      child: WillPopScope(
+        child: Scaffold(
+          body: _tabs.elementAt(index),
+          bottomNavigationBar: BottomNavigationBar(
+            items: <BottomNavigationBarItem>[
+              BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Home'),
+              BottomNavigationBarItem(icon: Icon(Icons.map_outlined), label: 'Map'),
+              BottomNavigationBarItem(icon: Icon(Icons.account_circle_outlined), label: 'Profile'),
+            ],
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            currentIndex: index,
+            fixedColor: Colors.blueAccent,
+            onTap: _onItemTapped,
+            type: BottomNavigationBarType.fixed,
+          ),
         ),
+        onWillPop: _onWillPop,
       )
     );
   }
