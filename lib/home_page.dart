@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import './map_page.dart';
+import './profile_page.dart';
+
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
 
@@ -8,166 +11,48 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<int> _queue = <int>[0];
-
-  static List<StatefulWidget> _widgetOptions = <StatefulWidget>[
-    HomeContent(),
-    MapContent(),
-    ProfileContent(),
-  ];
-
   void _onItemTapped(int index) => setState(() {
-    _queue.add(index);
+    if (index == 1) {
+      Navigator.of(context).push(PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) => MapPage(),
+      ));
+    } else if (index == 2) {
+      Navigator.of(context).push(PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) => ProfilePage(),
+      ));
+    }
+    // Navigator.of(context).push(PageRouteBuilder(
+    //   pageBuilder: (context, animation, secondaryAnimation) => MapPage(),
+    // ));
+    // Navigator.of(context).pushReplacementNamed('/map');
+    // Navigator.of(context).push(PageRouteBuilder(
+    //   pageBuilder: (),
+    // ));
   });
 
   @override
   Widget build(BuildContext context) {
-    int _currentIndex =_queue.elementAt(_queue.length - 1);
-    return WillPopScope(
-      onWillPop: () async {
-        if (_queue.length > 1) {
-          setState(() {
-            _queue.removeAt(_queue.length - 1);
-          });
-          return false;
-        }
-        return true;
-      },
-      child: Scaffold(
-        body: Center(child: _widgetOptions.elementAt(_currentIndex)),
-        bottomNavigationBar: BottomNavigationBar(
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(icon: Icon(Icons.home_outlined), title: Text('Home')),
-            BottomNavigationBarItem(icon: Icon(Icons.map_outlined), title: Text('Map')),
-            BottomNavigationBarItem(icon: Icon(Icons.account_circle_outlined), title: Text('Profile')),
-          ],
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          currentIndex: _currentIndex,
-          fixedColor: Colors.blueAccent,
-          onTap: _onItemTapped,
-          type: BottomNavigationBarType.fixed,
-        ),
-      ),
-    );
-  }
-}
-
-class HomeContent extends StatefulWidget {
-  HomeContent({Key key}) : super(key: key);
-
-  @override
-  _HomeContentState createState() => _HomeContentState();
-}
-
-class _HomeContentState extends State<HomeContent> {
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Home"),
-        elevation: 0,
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('You have pushed the button this many times:'),
-            OutlinedButton(
-                child: const Text('Push'),
-                onPressed: () {
-                  Navigator.of(context).push<void>(
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) {
-                        return SamplePage();
-                      },
-                    ),
-                  );
-                },
-              ),
+            Text('Home'),
           ],
         ),
       ),
-    );
-  }
-}
-
-class MapContent extends StatefulWidget {
-  MapContent({Key key}) : super(key: key);
-
-  @override
-  _MapContentState createState() => _MapContentState();
-}
-
-class _MapContentState extends State<MapContent> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Map"),
-        elevation: 0,
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text('You have pushed the button this many times:'),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class ProfileContent extends StatefulWidget {
-  ProfileContent({Key key}) : super(key: key);
-
-  @override
-  _ProfileContentState createState() => _ProfileContentState();
-}
-
-class _ProfileContentState extends State<ProfileContent> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Profile"),
-        elevation: 0,
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text('You have pushed the button this many times:'),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class SamplePage extends StatefulWidget {
-  SamplePage({Key key}) : super(key: key);
-
-  @override
-  _SamplePageState createState() => _SamplePageState();
-}
-
-class _SamplePageState extends State<SamplePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("SamplePage"),
-        elevation: 0,
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text('Sample Page'),
-          ],
-        ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.map_outlined), label: 'Map'),
+          BottomNavigationBarItem(icon: Icon(Icons.account_circle_outlined), label: 'Profile'),
+        ],
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        currentIndex: 0,
+        fixedColor: Colors.blueAccent,
+        onTap: _onItemTapped,
+        type: BottomNavigationBarType.fixed,
       ),
     );
   }
