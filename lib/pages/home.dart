@@ -17,8 +17,8 @@ class _HomePageState extends State<HomePage> {
   List<int> _tabStack = <int>[0];
 
   List<Widget> _tabs = [
-    HomeBody(),
     MapBody(),
+    HomeBody(),
     ProfileBody(),
   ];
 
