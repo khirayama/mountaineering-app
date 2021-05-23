@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../secret.dart';
+import './map_body_style_json.dart';
 
 CameraPosition _cachedCameraPosition = CameraPosition(
   zoom: 9.0,
@@ -20,6 +22,28 @@ class MapBody extends StatefulWidget {
 class _MapBodyState extends State<MapBody> {
   MapboxMapController _controller;
 
+  String styleAbsoluteFilePath;
+
+  @override
+  initState() {
+    super.initState();
+
+    getApplicationDocumentsDirectory().then((dir) async {
+      String documentDir = dir.path;
+      String stylesDir = '$documentDir/styles';
+
+      await new Directory(stylesDir).create(recursive: true);
+
+      File styleFile = new File('$stylesDir/style.json');
+
+      await styleFile.writeAsString(styleJSON);
+
+      setState(() {
+        styleAbsoluteFilePath = styleFile.path;
+      });
+    });
+  }
+
   void _onMapChanged() {
     _cachedCameraPosition = _controller.cameraPosition;
     setState(() {
@@ -31,11 +55,17 @@ class _MapBodyState extends State<MapBody> {
 
   @override
   Widget build(BuildContext context) {
+    if (styleAbsoluteFilePath == null) {
+      return Scaffold(
+        body: Center(child: Text('Creating local style file...')),
+      );
+    }
+
     final MapboxMap mapboxMap = MapboxMap(
       accessToken: MAPBOX_ACCESS_TOKEN,
       initialCameraPosition: _cameraPosition,
       trackCameraPosition: true,
-      styleString: MAPBOX_STYLE_STRING,
+      styleString: styleAbsoluteFilePath,
       minMaxZoomPreference: MinMaxZoomPreference(4, 16),
       onMapCreated: (MapboxMapController controller) {
         _controller = controller;
