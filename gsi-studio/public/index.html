@@ -31,6 +31,19 @@
   <body>
     <div id="map"></div>
     <script>
+      const getCircularReplacer = () => {
+        const seen = new WeakSet();
+        return (key, value) => {
+          if (typeof value === "object" && value !== null) {
+            if (seen.has(value)) {
+              return;
+            }
+            seen.add(value);
+          }
+          return value;
+        };
+      };
+
       const map = new mapboxgl.Map({
         container: "map",
         hash: true,
@@ -42,6 +55,21 @@
       });
       map.addControl(new mapboxgl.NavigationControl(), "bottom-right");
       map.addControl(new mapboxgl.ScaleControl());
+      // map.on('data', (event) => {
+      //   console.log(event);
+      // });
+      map.on('load', (event) => {
+        console.log(event);
+        const source = map.getSource('gsi-mapbox-vector');
+        console.log(source);
+      });
+      map.on('sourcedata', (event) => {
+        console.log(event);
+      });
+      map.on('click', 'layer-1161', (e) => {
+        console.log('click');
+        console.log(e);
+      });
     </script>
   </body>
 </html>
