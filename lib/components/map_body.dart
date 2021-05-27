@@ -71,6 +71,12 @@ class _MapBodyState extends State<MapBody> {
         _controller = controller;
         _cameraPosition = controller.cameraPosition;
         _controller.addListener(_onMapChanged);
+        _controller.addSymbol(
+          SymbolOptions(
+            geometry: LatLng(33.556457, 130.480625),
+            textField: 'Hirayama',
+          )
+        );
       },
     );
 
