@@ -71,13 +71,42 @@ class _MapBodyState extends State<MapBody> {
         _controller = controller;
         _cameraPosition = controller.cameraPosition;
         _controller.addListener(_onMapChanged);
-        _controller.addSymbol(
+      },
+      onStyleLoadedCallback: () {
+        print('Hello');
+        List<LatLng> geometries = [
+            LatLng(33.556457, 130.480625),
+            LatLng(34.556457, 131.480625),
+            LatLng(35.556457, 130.480625),
+            LatLng(35.556457, 131.480625),
+        ];
+        _controller.addLine(LineOptions(
+          lineColor: '#ff0000',
+          geometry: geometries,
+        ));
+        List<CircleOptions> circleOptions = geometries.map((LatLng geo) {
+            print(geo);
+            return CircleOptions(
+              circleColor: '#ff0000',
+              circleRadius: 4,
+              geometry: geo,
+            );
+          }).toList();
+        _controller.addCircles(circleOptions);
+        _controller.addSymbols([
           SymbolOptions(
             geometry: LatLng(33.556457, 130.480625),
-            textField: 'Hirayama',
+            fontNames: ['DIN Offc Pro Bold', 'Arial Unicode MS Regular'],
+            textField: 'hogehoge',
+            textSize: 12.5,
+            textOffset: Offset(0, 0.8),
+            textAnchor: 'top',
+            textColor: '#ff0000',
+            textHaloColor: '#ff0000',
+            textHaloWidth: 0.8,
           )
-        );
-      },
+        ]);
+      }
     );
 
     return Stack(
